@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js Basics</title>
+</head>
+
+<body>
+    <div id="root">
+        <h1>{{title}}</h1>
+        <!-- CODITIONAL RENDERING: V-if directive hides the element until some condition is met. Can also use v-show. V-if completely rremoves the elem form the DOM, v-show simply applies display: none to it -->
+        <h2 v-if="todo.length > 3">Todo: {{todo}}</h2>
+        <!-- Use extra if conditions to show different versions of the elem -->
+        <h2 v-else-if="todo.length > 0 && todo.length <= 3">Keep writing...</h2>
+        <h2 v-else>Enter new todo</h2>
+        <label for="">Enter Todo</label>
+        <!-- V-model directive creates TWO WAY DATA BINDING between the input field, the data property and the 'output' field -->
+        <input type="text" v-model="todo">
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+</body>
+<script>
+    new Vue({ // A 'Vue instance' - made available to the specific element (#root)
+        el: '#root',
+        // The data available the the decleared Vue instance:
+        // data: { 
+        //     title: 'Welcome to Vue moddafukkers!' // Simple data
+        // }
+        // data: function () { // Use data as a function to let every component 'make' their own istance of the data - if decleared as an object, all components wil refer to the same data
+        //     return {
+        //         title: 'Welcome to Vue!'
+        //     }
+        // },
+        // Use the faster shorthand syntax for the function:
+        data() {
+            return {
+                title: 'Welcome onboard the Vue train!',
+                todo: '',
+            }
+        }
+    })
+</script>
+
+</html>
