@@ -23,7 +23,7 @@
         <input type="text" v-model="todo" :class="[todo.length > 3 ? 'valid': 'invalid']" />
         <!-- v-on handles events. You can add your own arguments, but they'll replace the default event data obj. Also pass $event if you want both -->
         <!-- V-on can be shortened to @click -->
-        <button @click="addTodo" :disabled="todo.length">Add</button>
+        <button @click="addTodo" :disabled="todo.length < 3">Add</button>
         <!-- V-bind: 'one way data binding': -->
         <!-- v-bind:disabled disables the input field depending on a boolean-->
         <!-- You can omit the v-bind prefix and just use the shorthand :value, :disabled -->
@@ -33,7 +33,8 @@
             <!-- V-for loops through an array and 'clones' the elem once for each elem in the array -->
             <!-- You can add arguments to the for loop. The index argument is built in -->
             <li v-for="(each, index) in todoList">
-                {{index + 1}} {{each}}
+                <!-- Apply filters by adding their method after the single rendered element, separated by | (the 'or' symbol). The filtering is applied when the elem is rendered.-->
+                {{ index + 1 }} {{ each | capitalizeTodo }}
             </li>
         </ul>
         <br><br>
@@ -75,14 +76,19 @@
             // }
             addTodo() {
                 this.todoList.push(this.todo); // We use this keyword to access the keys in our data obj
-                console.log(this.todoList)
+                // console.log(this.todoList)
                 this.todo = ''; // Clears the input field after you click 'Add'
             },
         },
         computed: { // COMPUTED are methods that will only get called when one or more of their DEPENDENCIES change (making the component re-render)
             getFood() {
-                console.log('getFood called')
+                // console.log('getFood called')
                 return this.food.toUpperCase();
+            }
+        },
+        filters: { // Filter methods go here
+            capitalizeTodo(value) { // The value passed here is the elem that the filter method is applied to (called after a '|')
+                return value.toUpperCase();
             }
         }
     })
