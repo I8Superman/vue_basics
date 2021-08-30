@@ -19,6 +19,13 @@
         <label for="">Enter Todo</label>
         <!-- V-model directive creates TWO WAY DATA BINDING between the input field, the data property and the 'output' field -->
         <input type="text" v-model="todo">
+        <!-- V-bind: 'one way data binding': -->
+        <!-- v-bind:disabled disables the input field depending on a boolean-->
+        <!-- You can omit the v-bind prefix and just use the shorthand :value, :disabled -->
+        <input type="text" v-bind:value="someOtherData" v-bind:disabled="!showExtraInput">
+        <!-- v-on handles events. You can add your own arguments, but they'll replace the default event data obj. Also pass $event if you want both -->
+        <!-- V-on can be shortened to @click -->
+        <button @click="addTodo('ThisIsAString', $event)">Add</button>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
 </body>
@@ -37,8 +44,17 @@
         // Use the faster shorthand syntax for the function:
         data() {
             return {
-                title: 'Welcome onboard the Vue train!',
+                title: 'Welcome to Vue!',
+                someOtherData: 'Another data',
                 todo: '',
+                showExtraInput: false, // Sets whether the v-bind:disabled s triggered or not
+            }
+        },
+        methods: {
+            addTodo(data, event) { // Default event object data is passed to the method (like normal eventlisteners)
+                console.log('Clicked');
+                console.log(data);
+                console.log(event);
             }
         }
     })
