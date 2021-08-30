@@ -25,7 +25,15 @@
         <input type="text" v-bind:value="someOtherData" v-bind:disabled="!showExtraInput">
         <!-- v-on handles events. You can add your own arguments, but they'll replace the default event data obj. Also pass $event if you want both -->
         <!-- V-on can be shortened to @click -->
-        <button @click="addTodo('ThisIsAString', $event)">Add</button>
+        <button @click="addTodo">Add</button>
+        <h2>My todo list</h2>
+        <ul>
+            <!-- V-for loops through an array and 'clones' the elem once for each elem in the array -->
+            <!-- You can add arguments to the for loop. The index argument is built in -->
+            <li v-for="(each, index) in todoList">
+                {{index + 1}} {{each}}
+            </li>
+        </ul>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
 </body>
@@ -48,13 +56,19 @@
                 someOtherData: 'Another data',
                 todo: '',
                 showExtraInput: false, // Sets whether the v-bind:disabled s triggered or not
+                todoList: [],
             }
         },
         methods: {
-            addTodo(data, event) { // Default event object data is passed to the method (like normal eventlisteners)
-                console.log('Clicked');
-                console.log(data);
-                console.log(event);
+            // addTodo(data, event) { // Default event object data is passed to the method (like normal eventlisteners)
+            //     console.log('Clicked');
+            //     console.log(data);
+            //     console.log(event);
+            // }
+            addTodo() {
+                this.todoList.push(this.todo); // We use this keyword to access the keys in our data obj
+                console.log(this.todoList)
+                this.todo = ''; // Clears the input field after you click 'Add'
             }
         }
     })
