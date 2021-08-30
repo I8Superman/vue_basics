@@ -18,14 +18,16 @@
         <h2 v-else>Enter new todo</h2>
         <label for="">Enter Todo</label>
         <!-- V-model directive creates TWO WAY DATA BINDING between the input field, the data property and the 'output' field -->
-        <input type="text" v-model="todo">
+        <!-- <input type="text" v-model="todo" :class="{valid: todo.length > 3, invalid: todo.length <= 3}" /> -->
+        <!--You can also use the ternary operator for dynamic classes (must be put into an array - you can also simply add an aray of classes): -->
+        <input type="text" v-model="todo" :class="[todo.length > 3 ? 'valid': 'invalid']" />
+        <!-- v-on handles events. You can add your own arguments, but they'll replace the default event data obj. Also pass $event if you want both -->
+        <!-- V-on can be shortened to @click -->
+        <button @click="addTodo" :disabled="todo.length">Add</button>
         <!-- V-bind: 'one way data binding': -->
         <!-- v-bind:disabled disables the input field depending on a boolean-->
         <!-- You can omit the v-bind prefix and just use the shorthand :value, :disabled -->
-        <input type="text" v-bind:value="someOtherData" v-bind:disabled="!showExtraInput">
-        <!-- v-on handles events. You can add your own arguments, but they'll replace the default event data obj. Also pass $event if you want both -->
-        <!-- V-on can be shortened to @click -->
-        <button @click="addTodo">Add</button>
+        <input type="text" v-bind:value="someOtherData" v-bind:disabled="!notDisabled">
         <h2>My todo list</h2>
         <ul>
             <!-- V-for loops through an array and 'clones' the elem once for each elem in the array -->
@@ -55,7 +57,7 @@
                 title: 'Welcome to Vue!',
                 someOtherData: 'Another data',
                 todo: '',
-                showExtraInput: false, // Sets whether the v-bind:disabled s triggered or not
+                notDisabled: false, // Sets whether the v-bind:disabled s triggered or not
                 todoList: [],
             }
         },
@@ -73,5 +75,14 @@
         }
     })
 </script>
+<style>
+    .valid {
+        border: 5px solid lightgreen;
+    }
+
+    .invalid {
+        border: 5px solid red;
+    }
+</style>
 
 </html>
