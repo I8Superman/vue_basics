@@ -36,6 +36,11 @@
                 {{index + 1}} {{each}}
             </li>
         </ul>
+        <br><br>
+        <!-- COMPUTED PROPORTIES are called without '()', as opposed to METHODS. Here the getFood will get called every time the component re-renders due to the food data property changing (when writing in the input field). getFood will change the entered character to uppercase (see computed function getFood below)-->
+        <h2>{{ getFood }}</h2>
+        <label for="">Enter your favorite dish</label>
+        <input type="text" v-model="food" />
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
 </body>
@@ -53,12 +58,13 @@
         // },
         // Use the faster shorthand syntax for the function:
         data() {
-            return {
+            return { // The whole component will generally re-render everytime any of the data changes
                 title: 'Welcome to Vue!',
                 someOtherData: 'Another data',
                 todo: '',
                 notDisabled: false, // Sets whether the v-bind:disabled s triggered or not
                 todoList: [],
+                food: '', // this data property is binded with v-model
             }
         },
         methods: {
@@ -71,6 +77,12 @@
                 this.todoList.push(this.todo); // We use this keyword to access the keys in our data obj
                 console.log(this.todoList)
                 this.todo = ''; // Clears the input field after you click 'Add'
+            },
+        },
+        computed: { // COMPUTED are methods that will only get called when one or more of their DEPENDENCIES change (making the component re-render)
+            getFood() {
+                console.log('getFood called')
+                return this.food.toUpperCase();
             }
         }
     })
