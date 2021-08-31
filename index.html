@@ -137,34 +137,34 @@
             }
         },
         // The Vue lifecycle = a certain sequence of phases and 'hooks' that begins with the creation and possible destruction of the Vue instance. Hooks are options to call methods/functions between the phases. Here is the possible hooks:
-        beforeCreate() {
-            console.log('beforeCreate');
-        },
-        created() {
-            console.log('created');
-        },
-        beforeMount() {
-            console.log('beforeMount');
-        },
-        mounted() {
-            console.log('mounted');
-        },
-        // Update is when ever any state changes (data fx)
-        beforeUpdate() {
-            console.log('beforeUpdate');
-        },
-        updated() {
-            console.log('updated');
-            // Lets try and destroy the component:
-            app.$destroy();
-        },
-        // Destroy is a method that can be called to 'delete' (?) the whole instance
-        beforeDestroy() {
-            console.log('beforeDestroy');
-        },
-        destroyed() {
-            console.log('destroyed');
-        }
+        // beforeCreate() {
+        //     console.log('beforeCreate');
+        // },
+        // created() {
+        //     console.log('created');
+        // },
+        // beforeMount() {
+        //     console.log('beforeMount');
+        // },
+        // mounted() {
+        //     console.log('mounted');
+        // },
+        // // Update is when ever any state changes (data fx)
+        // beforeUpdate() {
+        //     console.log('beforeUpdate');
+        // },
+        // updated() {
+        //     console.log('updated');
+        //     // Lets try and destroy the component:
+        //     // app.$destroy(); // Remove comment out to see the destroy in action
+        // },
+        // // Destroy is a method that can be called to 'destroy' the whole instance (= resetting it?)
+        // beforeDestroy() {
+        //     console.log('beforeDestroy');
+        // },
+        // destroyed() {
+        //     console.log('destroyed');
+        // }
     })
 </script>
 <style>
