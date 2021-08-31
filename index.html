@@ -88,7 +88,7 @@
         }
     };
 
-    new Vue({ // A 'Vue instance' - made available to the specific element (#root)
+    let app = new Vue({ // A 'Vue instance' - made available to the specific element (#root)
         el: '#root',
         components: { // Here we 'register' our components to be used locally (only where needed)
             'todo-list': myTodoListComponent
@@ -135,6 +135,35 @@
             capitalizeTodo(value) { // The value passed here is the elem that the filter method is applied to (called after a '|')
                 return value.toUpperCase();
             }
+        },
+        // The Vue lifecycle = a certain sequence of phases and 'hooks' that begins with the creation and possible destruction of the Vue instance. Hooks are options to call methods/functions between the phases. Here is the possible hooks:
+        beforeCreate() {
+            console.log('beforeCreate');
+        },
+        created() {
+            console.log('created');
+        },
+        beforeMount() {
+            console.log('beforeMount');
+        },
+        mounted() {
+            console.log('mounted');
+        },
+        // Update is when ever any state changes (data fx)
+        beforeUpdate() {
+            console.log('beforeUpdate');
+        },
+        updated() {
+            console.log('updated');
+            // Lets try and destroy the component:
+            app.$destroy();
+        },
+        // Destroy is a method that can be called to 'delete' (?) the whole instance
+        beforeDestroy() {
+            console.log('beforeDestroy');
+        },
+        destroyed() {
+            console.log('destroyed');
         }
     })
 </script>
