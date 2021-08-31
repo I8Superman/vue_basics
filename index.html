@@ -28,15 +28,17 @@
         <!-- v-bind:disabled disables the input field depending on a boolean-->
         <!-- You can omit the v-bind prefix and just use the shorthand :value, :disabled -->
         <input type="text" v-bind:value="someOtherData" v-bind:disabled="!notDisabled">
-        <h2>My todo list</h2>
-        <ul>
-            <!-- V-for loops through an array and 'clones' the elem once for each elem in the array -->
-            <!-- You can add arguments to the for loop. The index argument is built in -->
-            <li v-for="(each, index) in todoList">
-                <!-- Apply filters by adding their method after the single rendered element, separated by | (the 'or' symbol). The filtering is applied when the elem is rendered.-->
-                {{ index + 1 }} {{ each | capitalizeTodo }}
-            </li>
-        </ul>
+        <!-- The markup below is instead created as its own component (see the script below) -->
+        <!-- <h2>My todo list</h2>
+        <ul> -->
+        <!-- V-for loops through an array and 'clones' the elem once for each elem in the array -->
+        <!-- You can add arguments to the for loop. The index argument is built in -->
+        <!-- <li v-for="(each, index) in todoList"> -->
+        <!-- Apply filters by adding their method after the single rendered element, separated by | (the 'or' symbol). The filtering is applied when the elem is rendered.-->
+        <!-- {{ index + 1 }} {{ each | capitalizeTodo }} -->
+        <!-- </li>
+        </ul>  -->
+        <todo-list :todos="todoList"></todo-list>
         <br><br>
         <!-- COMPUTED PROPORTIES are called without '()', as opposed to METHODS. Here the getFood will get called every time the component re-renders due to the food data property changing (when writing in the input field). getFood will change the entered character to uppercase (see computed function getFood below)-->
         <h2>{{ getFood }}</h2>
@@ -46,8 +48,51 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
 </body>
 <script>
+    // This component is registered 'globally' - directly on the vue instance:
+    // Vue.component('todo-list', {
+    //     props: ['todos'], // We pass these props to the component to use (props are also called custom attributes)
+    //     template: `
+    //     <div>
+    //         <h2>My todo list</h2>
+    //             <ul>
+    //                 <li v-for="(each, index) in todos">
+    //                 {{ index + 1 }} {{ each | capitalizeTodo }}
+    //             </li>
+    //         </ul>
+    //     </div>
+    // `,
+    //     filters: { // each component gets its own methods, filters etc. (I think?)
+    //         capitalizeTodo(value) { // The value passed here is the elem that the filter method is applied to (called after a '|')
+    //             return value.toUpperCase();
+    //         }
+    //     }
+    // })
+
+    let myTodoListComponent = {
+        props: ['todos'], // We pass these props to the component to use (props are also called custom attributes)
+        // the tmeplate can have only one root elem:
+        template: ` 
+        <div> 
+            <h2>My todo list</h2>
+                <ul>
+                    <li v-for="(each, index) in todos">
+                    {{ index + 1 }} {{ each | capitalizeTodo }}
+                </li>
+            </ul>
+        </div>
+    `,
+        filters: { // each component gets its own methods, filters etc. 
+            capitalizeTodo(value) { // The value passed here is the elem that the filter method is applied to (called after a '|')
+                return value.toUpperCase();
+            }
+        }
+    };
+
     new Vue({ // A 'Vue instance' - made available to the specific element (#root)
         el: '#root',
+        components: { // Here we 'register' our components to be used locally (only where needed)
+            'todo-list': myTodoListComponent
+        },
         // The data available the the decleared Vue instance:
         // data: { 
         //     title: 'Welcome to Vue moddafukkers!' // Simple data
